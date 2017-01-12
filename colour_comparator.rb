@@ -1,29 +1,28 @@
 module ColourComparator
-
-  def self.ciede2000(l1, a1, b1, l2, a2, b2)
-    c1_star = Math.sqrt(a1**2 + b1**2)
-    c2_star = Math.sqrt(a2**2 + b2**2)
+  def self.ciede2000(lab1, lab2)
+    c1_star = Math.sqrt(lab1[:a]**2 + lab1[:b]**2)
+    c2_star = Math.sqrt(lab2[:a]**2 + lab2[:b]**2)
     c_bar_star = (c1_star + c2_star) / 2
 
     g = 0.5 * (1 - Math.sqrt(c_bar_star**7 / (c_bar_star**7 + 25**7)))
-    a1_prime = (1 + g) * a1
-    a2_prime = (1 + g) * a2
-    c1 = Math.sqrt(a1_prime**2 + b1**2)
-    c2 = Math.sqrt(a2_prime**2 + b2**2)
+    a1_prime = (1 + g) * lab1[:a]
+    a2_prime = (1 + g) * lab2[:a]
+    c1 = Math.sqrt(a1_prime**2 + lab1[:b]**2)
+    c2 = Math.sqrt(a2_prime**2 + lab2[:b]**2)
 
-    h1 = if b1 == 0 && a1_prime == 0
+    h1 = if lab1[:b] == 0 && a1_prime == 0
            0
          else
-           Math.atan2(b1, a1_prime) * 180 / Math::PI
+           Math.atan2(lab1[:b], a1_prime) * 180 / Math::PI
          end
 
-    h2 = if b2 == 0 && a2_prime == 0
+    h2 = if lab2[:b] == 0 && a2_prime == 0
            0
          else
-           Math.atan2(b2, a2_prime) * 180 / Math::PI
+           Math.atan2(lab2[:b], a2_prime) * 180 / Math::PI
          end
 
-    l_delta = l2 - l1
+    l_delta = lab2[:l] - lab1[:l]
     c_delta = c2 - c1
 
     h = if c1 * c2 == 0
@@ -37,7 +36,7 @@ module ColourComparator
         end
     h_delta = 2 * Math.sqrt(c1 * c2) * Math.sin(radians(h) / 2)
 
-    l_bar = (l1 + l2) / 2
+    l_bar = (lab1[:l] + lab2[:l]) / 2
     c_bar = (c1 + c2) / 2
 
     h_bar = if (c1 * c2) == 0

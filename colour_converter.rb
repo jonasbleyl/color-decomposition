@@ -1,11 +1,10 @@
 require 'matrix'
 
 module ColourConverter
-
-  def self.rgb_to_xyz(red, green, blue)
-    r = xyz_channel(red / 255.0)
-    g = xyz_channel(green / 255.0)
-    b = xyz_channel(blue / 255.0)
+  def self.rgb_to_xyz(rgb)
+    r = xyz_channel(rgb[:r] / 255.0)
+    g = xyz_channel(rgb[:g] / 255.0)
+    b = xyz_channel(rgb[:b] / 255.0)
 
     # sRGB D65 illuminant and 2° observer values
     s = Matrix[[0.4124, 0.3576, 0.1805],
@@ -13,24 +12,24 @@ module ColourConverter
                [0.0193, 0.1192, 0.9505]]
 
     xyz = (s * Matrix[[r], [g], [b]]) * 100
-    [xyz[0, 0], xyz[1, 0], xyz[2, 0]]
+    { x: xyz[0, 0], y: xyz[1, 0], z: xyz[2, 0] }
   end
 
-  def self.xyz_to_lab(x, y, z)
+  def self.xyz_to_lab(xyz)
     # CIEXYZ white point values (D65)
-    x = f(x / 95.047)
-    y = f(y / 100.000)
-    z = f(z / 108.883)
+    x = f(xyz[:x] / 95.047)
+    y = f(xyz[:y] / 100.000)
+    z = f(xyz[:z] / 108.883)
 
     l = (116 * y - 16)
     a = 500 * (x - y)
     b = 200 * (y - z)
-    [l.clamp(0, 100), a, b]
+    { l: l.clamp(0, 100), a: a, b: b }
   end
 
-  def self.rgb_to_lab(r, g, b)
-    x, y, z = rgb_to_xyz(r, g, b)
-    xyz_to_lab(x, y, z)
+  def self.rgb_to_lab(rgb)
+    xyz = rgb_to_xyz(rgb)
+    xyz_to_lab(xyz)
   end
 
   private

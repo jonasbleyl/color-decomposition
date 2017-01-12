@@ -9,23 +9,14 @@ include Magick
 # scanline = img.export_pixels(0, 0, img.columns, 1, "RGB");
 #
 # scanline.each_slice(3) do |pixel|
-#   rgb = { red: (pixel[0]/65535)*255, green: (pixel[1]/65535)*255, blue: (pixel[2]/65535)*255 }
+#   rgb = { r: (pixel[0]/65535)*255, g: (pixel[1]/65535)*255, b: (pixel[2]/65535)*255 }
 #   pixels.push(rgb)
 # end
 #
 # p pixels
 
-# x, y, z = ColourConverter.rgb_to_xyz(120, 17, 17)
-# p "XYZ: #{x} #{y} #{z}"
-#
-# l, a, b = ColourConverter.xyz_to_lab(x, y, z)
-# p "LAB: #{l} #{a} #{b}"
-#
-# l, c, h = ColourConverter.lab_to_lch(l, a, b)
-# p "LCH: #{l} #{c} #{h}"
+lab1 = ColourConverter.rgb_to_lab({ r: 120, g: 17, b: 17 })
+lab2 = ColourConverter.rgb_to_lab({ r: 189, g: 40, b: 40 })
 
-l1, a1, b1 = ColourConverter.rgb_to_lab(120, 17, 17)
-l2, a2, b2 = ColourConverter.rgb_to_lab(189, 40, 40)
-
-value = ColourComparator.ciede2000(l1, a1, b1, l2, a2, b2)
+value = ColourComparator.ciede2000(lab1, lab2)
 p "CIEDE2000: #{value}"
