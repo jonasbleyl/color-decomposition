@@ -1,6 +1,5 @@
 require_relative 'colour_converter'
 require_relative 'colour_comparator'
-require_relative 'diff'
 require 'rmagick'
 
 include Magick
