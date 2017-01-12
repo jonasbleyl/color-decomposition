@@ -1,5 +1,5 @@
-require_relative 'colour_converter'
-require_relative 'colour_comparator'
+require_relative 'color_converter'
+require_relative 'color_comparator'
 require 'rmagick'
 
 include Magick
@@ -15,8 +15,8 @@ include Magick
 #
 # p pixels
 
-lab1 = ColourConverter.rgb_to_lab({ r: 120, g: 17, b: 17 })
-lab2 = ColourConverter.rgb_to_lab({ r: 189, g: 40, b: 40 })
+lab1 = ColorConverter.rgb_to_lab({ r: 120, g: 17, b: 17 })
+lab2 = ColorConverter.rgb_to_lab({ r: 189, g: 40, b: 40 })
 
-value = ColourComparator.ciede2000(lab1, lab2)
+value = ColorComparator.ciede2000(lab1, lab2)
 p "CIEDE2000: #{value}"

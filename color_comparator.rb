@@ -1,4 +1,4 @@
-module ColourComparator
+module ColorComparator
   def self.ciede2000(lab1, lab2)
     c1_star = Math.sqrt(lab1[:a]**2 + lab1[:b]**2)
     c2_star = Math.sqrt(lab2[:a]**2 + lab2[:b]**2)

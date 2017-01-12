@@ -1,6 +1,6 @@
 require 'matrix'
 
-module ColourConverter
+module ColorConverter
   def self.rgb_to_xyz(rgb)
     r = xyz_channel(rgb[:r] / 255.0)
     g = xyz_channel(rgb[:g] / 255.0)
@@ -17,9 +17,9 @@ module ColourConverter
 
   def self.xyz_to_lab(xyz)
     # CIEXYZ white point values (D65)
-    x = f(xyz[:x] / 95.047)
-    y = f(xyz[:y] / 100.000)
-    z = f(xyz[:z] / 108.883)
+    x = lab_channel(xyz[:x] / 95.047)
+    y = lab_channel(xyz[:y] / 100.000)
+    z = lab_channel(xyz[:z] / 108.883)
 
     l = (116 * y - 16)
     a = 500 * (x - y)
@@ -34,19 +34,19 @@ module ColourConverter
 
   private
 
-  def self.xyz_channel(colour)
-    if colour > 0.04045
-      ((colour + 0.055) / 1.055)**2.4
+  def self.xyz_channel(color)
+    if color > 0.04045
+      ((color + 0.055) / 1.055)**2.4
     else
-      colour / 12.92
+      color / 12.92
     end
   end
 
-  def self.f(t)
-    if t > 0.008856
-      t**(1.0 / 3)
-    elsif t <= 0.008856
-      7.787 * t + 16 / 116.0
+  def self.lab_channel(color)
+    if color > 0.008856
+      color**(1.0 / 3)
+    else
+      7.787 * color + 16 / 116.0
     end
   end
 end
