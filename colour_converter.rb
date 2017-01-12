@@ -1,6 +1,7 @@
 require 'matrix'
 
 module ColourConverter
+
   def self.rgb_to_xyz(red, green, blue)
     r = xyz_channel(red / 255.0)
     g = xyz_channel(green / 255.0)
@@ -27,18 +28,6 @@ module ColourConverter
     [l.clamp(0, 100), a, b]
   end
 
-  # def self.lab_to_lch(l, a, b)
-  #   c = Math.sqrt(a**2 + b**2)
-  #   h = Math.atan2(b, a)
-  #
-  #   h = if h > 0
-  #         (h / Math::PI) * 180
-  #       else
-  #         360 - (h.abs / Math::PI) * 180
-  #       end
-  #   [l, c, h]
-  # end
-
   def self.rgb_to_lab(r, g, b)
     x, y, z = rgb_to_xyz(r, g, b)
     xyz_to_lab(x, y, z)
@@ -58,7 +47,7 @@ module ColourConverter
     if t > 0.008856
       t**(1.0 / 3)
     elsif t <= 0.008856
-      7.787 * t + 16.0 / 116
+      7.787 * t + 16 / 116.0
     end
   end
 end

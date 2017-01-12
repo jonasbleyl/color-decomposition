@@ -1,9 +1,27 @@
 module ColourComparator
-  def self.ciede2000(l1, c1, h1, l2, c2, h2)
 
+  def self.ciede2000(l1, a1, b1, l2, a2, b2)
+    c1_star = Math.sqrt(a1**2 + b1**2)
+    c2_star = Math.sqrt(a2**2 + b2**2)
+    c_bar_star = (c1_star + c2_star) / 2
 
-    # C and H differences
+    g = 0.5 * (1 - Math.sqrt(c_bar_star**7 / (c_bar_star**7 + 25**7)))
+    a1_prime = (1 + g) * a1
+    a2_prime = (1 + g) * a2
+    c1 = Math.sqrt(a1_prime**2 + b1**2)
+    c2 = Math.sqrt(a2_prime**2 + b2**2)
 
+    h1 = if b1 == 0 && a1_prime == 0
+           0
+         else
+           Math.atan2(b1, a1_prime) * 180 / Math::PI
+         end
+
+    h2 = if b2 == 0 && a2_prime == 0
+           0
+         else
+           Math.atan2(b2, a2_prime) * 180 / Math::PI
+         end
 
     l_delta = l2 - l1
     c_delta = c2 - c1
@@ -17,20 +35,19 @@ module ColourComparator
         else
           (h2 - h1) + 360
         end
-    h_delta = 2 * Math.sqrt(c2 * c2) * Math.sin(radians(h) / 2.0)
+    h_delta = 2 * Math.sqrt(c1 * c2) * Math.sin(radians(h) / 2)
 
-
-    l_bar = (l1 + l2) / 2.0
-    c_bar = (c1 + c2) / 2.0
+    l_bar = (l1 + l2) / 2
+    c_bar = (c1 + c2) / 2
 
     h_bar = if (c1 * c2) == 0
               h1 + h2
             elsif (h1 - h2).abs <= 180
-              (h1 + h2) / 2.0
+              (h1 + h2) / 2
             elsif (h1 - h2).abs > 180 && (h1 + h2) < 360
-              (h1 + h2 + 360) / 2.0
+              (h1 + h2 + 360) / 2
             else
-              (h1 + h2 - 360) / 2.0
+              (h1 + h2 - 360) / 2
             end
 
     t = 1 - 0.17 * Math.cos(radians(h_bar - 30)) +
