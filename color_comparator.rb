@@ -39,18 +39,10 @@ module ColorComparator
     c1 = Math.sqrt(a1**2 + lab1[:b]**2)
     c2 = Math.sqrt(a2**2 + lab2[:b]**2)
 
-    h1 = modified_hue(lab1[:b], a1)
-    h2 = modified_hue(lab2[:b], a2)
+    h1 = lab1[:b] != 0 || a1 != 0 ? degrees(Math.atan2(lab1[:b], a1)) : 0
+    h2 = lab2[:b] != 0 || a2 != 0 ? degrees(Math.atan2(lab2[:b], a2)) : 0
 
     [{ l: lab1[:l], c: c1, h: h1 }, { l: lab2[:l], c: c2, h: h2 }]
-  end
-
-  def self.modified_hue(b, a)
-    if b != 0 || a != 0
-      Math.atan2(b, a) * 180 / Math::PI
-    else
-      0
-    end
   end
 
   def self.hue_delta(lch1, lch2)
@@ -82,5 +74,9 @@ module ColorComparator
 
   def self.radians(num)
     num * Math::PI / 180
+  end
+
+  def self.degrees(num)
+    num * 180 / Math::PI
   end
 end

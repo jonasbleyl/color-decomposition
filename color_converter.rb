@@ -11,7 +11,7 @@ module ColorConverter
                [0.2126, 0.7152, 0.0722],
                [0.0193, 0.1192, 0.9505]]
 
-    xyz = (s * Matrix[[r], [g], [b]]) * 100
+    xyz = s * Matrix[[r], [g], [b]] * 100
     { x: xyz[0, 0], y: xyz[1, 0], z: xyz[2, 0] }
   end
 
@@ -21,7 +21,7 @@ module ColorConverter
     y = lab_channel(xyz[:y] / 100.000)
     z = lab_channel(xyz[:z] / 108.883)
 
-    l = (116 * y - 16)
+    l = 116 * y - 16
     a = 500 * (x - y)
     b = 200 * (y - z)
     { l: l.clamp(0, 100), a: a, b: b }
