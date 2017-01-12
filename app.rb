@@ -16,14 +16,17 @@ include Magick
 #
 # p pixels
 
-x, y, z = ColourConverter.rgb_to_xyz(120, 17, 17)
-p "XYZ: #{x} #{y} #{z}"
-
-l, a, b = ColourConverter.xyz_to_lab(x, y, z)
-p "LAB: #{l} #{a} #{b}"
-
+# x, y, z = ColourConverter.rgb_to_xyz(120, 17, 17)
+# p "XYZ: #{x} #{y} #{z}"
+#
+# l, a, b = ColourConverter.xyz_to_lab(x, y, z)
+# p "LAB: #{l} #{a} #{b}"
+#
 # l, c, h = ColourConverter.lab_to_lch(l, a, b)
 # p "LCH: #{l} #{c} #{h}"
 
-# l1, a1, b1 = ColourConverter.rgb_to_lab(120, 17, 17)
-# l2, a2, b2 = ColourConverter.rgb_to_lab(189, 40, 40)
+l1, a1, b1 = ColourConverter.rgb_to_lab(120, 17, 17)
+l2, a2, b2 = ColourConverter.rgb_to_lab(189, 40, 40)
+
+value = ColourComparator.ciede2000(l1, a1, b1, l2, a2, b2)
+p "CIEDE2000: #{value}"
