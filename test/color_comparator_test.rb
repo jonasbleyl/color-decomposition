@@ -1,4 +1,4 @@
-require_relative '../lib/color_comparator'
+require 'color_comparator'
 require 'test/unit'
 require 'csv'
 

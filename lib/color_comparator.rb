@@ -20,7 +20,7 @@ module ColorComparator
     sl = 1 + 0.015 * (l_bar - 50)**2 / Math.sqrt(20 + (l_bar - 50)**2)
     sc = 1 + 0.045 * c_bar
     sh = 1 + 0.015 * c_bar * t
-    rt = -Math.sin(radians(o_delta) * 2) * rc
+    rt = -Math.sin(radians(2 * o_delta)) * rc
     Math.sqrt((l_delta / sl)**2 + (c_delta / sc)**2 + (h_delta / sh)**2 +
               rt * (c_delta / sc) * (h_delta / sh)).clamp(0, 100)
   end
