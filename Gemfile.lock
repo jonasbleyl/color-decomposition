@@ -1,12 +1,14 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    rake (12.0.0)
     rmagick (2.16.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  rake (~> 12.0)
   rmagick (~> 2.16)
 
 BUNDLED WITH
