@@ -10,7 +10,6 @@ class TestColorComparator < Test::Unit::TestCase
       lab2 = { l: row[3].to_f, a: row[4].to_f, b: row[5].to_f }
       @sample_data.push(lab1: lab1, lab2: lab2, ciede2000: row[6].to_f)
     end
-    p @sample_data
   end
 
   def test_ciede2000
