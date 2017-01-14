@@ -5,7 +5,7 @@ require 'csv'
 class TestColorComparator < Test::Unit::TestCase
   def setup
     @sample_data = []
-    CSV.foreach('test/data/sample.csv') do |row|
+    CSV.foreach('test/data/ciede2000-data.csv', headers: true) do |row|
       lab1 = { l: row[0].to_f, a: row[1].to_f, b: row[2].to_f }
       lab2 = { l: row[3].to_f, a: row[4].to_f, b: row[5].to_f }
       @sample_data.push(lab1: lab1, lab2: lab2, ciede2000: row[6].to_f)
