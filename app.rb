@@ -1,22 +1,31 @@
-require_relative 'color_converter'
-require_relative 'color_comparator'
+require_relative 'lib/color/color_converter'
+require_relative 'lib/color/color_comparator'
+require_relative 'lib/quadtree'
+require_relative 'lib/node'
 require 'rmagick'
 
 include Magick
 
-# pixels = []
-# img = ImageList.new("mushroom.png")
-# scanline = img.export_pixels(0, 0, img.columns, 1, "RGB");
-#
-# scanline.each_slice(3) do |pixel|
-#   rgb = { r: (pixel[0]/65535)*255, g: (pixel[1]/65535)*255, b: (pixel[2]/65535)*255 }
-#   pixels.push(rgb)
-# end
-#
-# p pixels
+quadtree = Quadtree.new
+img = ImageList.new('tiny.png')
 
-lab1 = ColorConverter.rgb_to_lab({ r: 120, g: 17, b: 17 })
-lab2 = ColorConverter.rgb_to_lab({ r: 189, g: 40, b: 40 })
+i = 0
+while i < img.rows
+  scanline = img.export_pixels(0, i, img.columns, 1, 'RGB')
+  row = []
+  scanline.each_slice(3).with_index do |pixel, j|
+    rgb = { r: (pixel[0] / 65_535.0) * 255,
+            g: (pixel[1] / 65_535.0) * 255,
+            b: (pixel[2] / 65_535.0) * 255 }
+    lab = ColorConverter.rgb_to_lab(rgb)
+    row.push(Node.new(lab))
+  end
+  quadtree.nodes.push(row)
+  i += 1
+end
 
-value = ColorComparator.ciede2000(lab1, lab2)
-p "CIEDE2000: #{value}"
+quadtree.generate
+p quadtree.root
+
+file = File.open('quadtree.txt', 'w')
+file.write(quadtree.nodes)
