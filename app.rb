@@ -9,8 +9,7 @@ include Magick
 quadtree = Quadtree.new
 img = ImageList.new('tiny.png')
 
-i = 0
-while i < img.rows
+img.rows.times do |i|
   scanline = img.export_pixels(0, i, img.columns, 1, 'RGB')
   row = []
   scanline.each_slice(3).with_index do |pixel, j|
@@ -21,7 +20,6 @@ while i < img.rows
     row.push(Node.new(lab))
   end
   quadtree.nodes.push(row)
-  i += 1
 end
 
 quadtree.generate
