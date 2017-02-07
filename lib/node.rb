@@ -1,7 +1,8 @@
 require_relative 'color/color_converter'
 
 class Node
-  attr_accessor :rgb, :lab, :rect, :child_nodes
+  attr_reader :rgb, :rect, :child_nodes
+  attr_accessor  :lab
 
   def initialize(rgb, rect, lab = nil, child_nodes = nil)
     @rgb = rgb
