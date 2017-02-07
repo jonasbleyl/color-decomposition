@@ -16,8 +16,8 @@ img.rows.times do |i|
     rgb = { r: (pixel[0] / 65_535.0) * 255,
             g: (pixel[1] / 65_535.0) * 255,
             b: (pixel[2] / 65_535.0) * 255 }
-    lab = ColorConverter.rgb_to_lab(rgb)
-    row.push(Node.new(lab))
+    rect = { left: i, top: j, right: i, bottom: j }
+    row.push(Node.new(rgb, rect))
   end
   quadtree.nodes.push(row)
 end

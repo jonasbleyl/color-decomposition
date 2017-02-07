@@ -12,19 +12,11 @@ class Quadtree
     @nodes.flatten[0]
   end
 
-  def merge(nodes, as_leaf)
-    if as_leaf
-      node = Node.new(nodes[0].lab)
-    else
-      node = Node.new(nodes[0].lab, nodes)
-    end
-  end
-
   def generate
     tempNodes = []
     tempRow = []
     while @nodes.size > 1
-      squares = ((nodes.size * nodes[0].size) / 4)
+      squares = (nodes.size * nodes[0].size) / 4
       p "#{nodes.size} #{nodes[0].size}"
       row = 0
       col = 0
@@ -34,7 +26,7 @@ class Quadtree
         n2 = @nodes[row][col + 1]
         n3 = @nodes[row + 1][col]
         n4 = @nodes[row + 1][col + 1]
-        if (n1.is_leaf? && n2.is_leaf? && n3.is_leaf? && n4.is_leaf?)
+        if n1.is_leaf? && n2.is_leaf? && n3.is_leaf? && n4.is_leaf?
           v1 = ColorComparator.ciede2000(n1.lab, n2.lab)
           v2 = ColorComparator.ciede2000(n3.lab, n4.lab)
           v3 = ColorComparator.ciede2000(n1.lab, n3.lab)
@@ -53,12 +45,22 @@ class Quadtree
         else
           col += 2
         end
-
       end
       @nodes.clear
       @nodes = tempNodes.dup
-      p "#{@nodes.size}"
       tempNodes.clear
+    end
+  end
+
+  private
+
+  def merge(nodes, as_leaf)
+    rect = { left: nodes[0].rect[:left], top: nodes[0].rect[:top],
+             right: nodes[3].rect[:right], bottom: nodes[3].rect[:bottom] }
+    if as_leaf
+      Node.new(nodes[0].rgb, rect, nodes[0].lab)
+    else
+      Node.new(nodes[0].rgb, rect, nodes[0].lab, nodes)
     end
   end
 end

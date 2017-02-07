@@ -1,21 +1,20 @@
-class Node
-  attr_accessor :left # top left x
-  attr_accessor :top # top left Y
-  attr_accessor :right # bottom right x
-  attr_accessor :bottom # bottom right y
-  attr_accessor :child_nodes
-  attr_accessor :lab
+require_relative 'color/color_converter'
 
-  def initialize(lab, child_nodes = nil)
+class Node
+  attr_accessor :rgb, :lab, :rect, :child_nodes
+
+  def initialize(rgb, rect, lab = nil, child_nodes = nil)
+    @rgb = rgb
+    @rect = rect
     @lab = lab
     @child_nodes = child_nodes
-    # @left = left
-    # @top = top
-    # @right = right
-    # @bottom = bottom
   end
 
   def is_leaf?
     @child_nodes.nil?
+  end
+
+  def lab
+    @lab ||= ColorConverter.rgb_to_lab(rgb)
   end
 end
