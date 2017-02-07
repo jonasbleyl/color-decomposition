@@ -1,4 +1,4 @@
-require_relative 'color/color_comparator'
+require_relative '../color/color_comparator'
 require_relative 'node'
 
 class Quadtree

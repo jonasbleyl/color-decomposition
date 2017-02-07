@@ -1,4 +1,4 @@
-require_relative 'color/color_converter'
+require_relative '../color/color_converter'
 
 class Node
   attr_reader :rgb, :rect, :child_nodes
