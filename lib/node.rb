@@ -11,7 +11,7 @@ class Node
     @child_nodes = child_nodes
   end
 
-  def is_leaf?
+  def leaf?
     @child_nodes.nil?
   end
 

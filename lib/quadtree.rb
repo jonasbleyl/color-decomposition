@@ -30,7 +30,7 @@ class Quadtree
 
     ((@nodes.size * @nodes[0].size) / 4).times do
       quad = quad_nodes(row, col)
-      node = merge(quad, are_leaves?(quad) && similar?(quad, diff_amount))
+      node = merge(quad, all_leaves?(quad) && similar?(quad, diff_amount))
       nodesRow.push(node)
       if col + 2 == @nodes[0].size
         col = 0
@@ -52,8 +52,8 @@ class Quadtree
     [n1, n2, n3, n4]
   end
 
-  def are_leaves?(nodes)
-    nodes.all?(&:is_leaf?)
+  def all_leaves?(nodes)
+    nodes.all?(&:leaf?)
   end
 
   def similar?(nodes, amount)
