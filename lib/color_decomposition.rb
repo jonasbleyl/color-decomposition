@@ -1,5 +1,4 @@
 require 'color_decomposition/version'
-require 'color_decomposition/color/color_converter'
 require 'color_decomposition/color/color_comparator'
 require 'color_decomposition/quadtree/quadtree'
 require 'color_decomposition/quadtree/node'

@@ -1,11 +1,11 @@
-require 'color_converter'
+require 'color_decomposition/color/color_converter'
 require 'test/unit'
 require 'csv'
 
 class TestColorConverter < Test::Unit::TestCase
   def setup
     @conversion_data = []
-    CSV.foreach('test/data/conversion-data.csv', headers: true) do |row|
+    CSV.foreach('test/data/csv/conversion-data.csv', headers: true) do |row|
       rgb = { r: row[0].to_f, g: row[1].to_f, b: row[2].to_f }
       xyz = { x: row[3].to_f, y: row[4].to_f, z: row[5].to_f }
       lab = { l: row[6].to_f, a: row[7].to_f, b: row[8].to_f }

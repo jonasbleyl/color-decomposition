@@ -1,6 +1,8 @@
 require 'rake/testtask'
 
-Rake::TestTask.new do |t|
+task default: %w[test]
+
+Rake::TestTask.new(:test) do |t|
   t.libs = ["lib"]
   t.warning = true
   t.verbose = true
