@@ -1,5 +1,5 @@
-require_relative '../color/color_comparator'
-require_relative 'node'
+require 'color_decomposition/color/color_comparator'
+require 'color_decomposition/quadtree/node'
 
 class Quadtree
   attr_accessor :nodes
@@ -27,7 +27,6 @@ class Quadtree
     nodesRow = []
     row = 0
     col = 0
-
     ((@nodes.size * @nodes[0].size) / 4).times do
       quad = quad_nodes(row, col)
       node = merge(quad, all_leaves?(quad) && similar?(quad, diff_amount))
