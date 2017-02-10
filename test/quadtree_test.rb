@@ -11,7 +11,7 @@ class TestColorComparator < Test::Unit::TestCase
     quadtree = Quadtree.new([[n1, n2], [n3, n4]])
     quadtree.generate(1)
 
-    assert_nil(quadtree.root.child_nodes)
+    assert(quadtree.root.leaf?)
     assert_equal(quadtree.root.rect, left: 0, top: 0, right: 2, bottom: 2)
   end
 end

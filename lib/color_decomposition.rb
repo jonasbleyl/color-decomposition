@@ -1,34 +1,12 @@
 require 'color_decomposition/version'
-require 'color_decomposition/color/color_comparator'
 require 'color_decomposition/quadtree/quadtree'
-require 'color_decomposition/quadtree/node'
-require 'rmagick'
-require 'pp'
+require 'color_decomposition/image/image_reader'
 
 module ColorDecomposition
-  include Magick
-
-  def self.run
-    quadtree = Quadtree.new
-    img = ImageList.new('tiny-c.png')
-
-    img.rows.times do |i|
-      scanline = img.export_pixels(0, i, img.columns, 1, 'RGB')
-      row = []
-      scanline.each_slice(3).with_index do |pixel, j|
-        rgb = { r: (pixel[0] / 65_535.0) * 255,
-                g: (pixel[1] / 65_535.0) * 255,
-                b: (pixel[2] / 65_535.0) * 255 }
-        rect = { left: i, top: j, right: i + 1, bottom: j + 1 }
-        row.push(Node.new(rgb, rect))
-      end
-      quadtree.nodes.push(row)
-    end
-
-    quadtree.generate(1)
-    pp quadtree.root
-
-    file = File.open('quadtree.txt', 'w')
-    file.write(quadtree.nodes.pretty_inspect)
+  def self.quadtree_from_image(path, similarity)
+    image = ImageReader.new(path)
+    quadtree = Quadtree.new(image.base_image_nodes)
+    quadtree.generate(similarity)
+    quadtree.root
   end
 end

@@ -4,7 +4,7 @@ require 'color_decomposition/quadtree/node'
 class Quadtree
   attr_accessor :nodes
 
-  def initialize(nodes = [])
+  def initialize(nodes)
     @nodes = nodes
   end
 
