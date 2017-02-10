@@ -10,7 +10,7 @@ module ColorDecomposition
 
   def self.run
     quadtree = Quadtree.new
-    img = ImageList.new('../color-decomposition/tiny-c.png')
+    img = ImageList.new('tiny-c.png')
 
     img.rows.times do |i|
       scanline = img.export_pixels(0, i, img.columns, 1, 'RGB')
