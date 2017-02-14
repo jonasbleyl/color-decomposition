@@ -17,4 +17,8 @@ class Node
   def lab
     @lab ||= ColorConverter.rgb_to_lab(rgb)
   end
+
+  def rgb_hex
+    "##{rgb[:r].to_s(16)}#{rgb[:g].to_s(16)}#{rgb[:b].to_s(16)}"
+  end
 end

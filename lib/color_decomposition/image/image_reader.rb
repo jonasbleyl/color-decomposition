@@ -20,9 +20,9 @@ class ImageReader
       scanline = @image.export_pixels(0, i, @image.columns, 1, 'RGB')
       row = []
       scanline.each_slice(3).with_index do |pixel, j|
-        rgb = { r: (pixel[0] / 65_535.0) * 255,
-                g: (pixel[1] / 65_535.0) * 255,
-                b: (pixel[2] / 65_535.0) * 255 }
+        rgb = { r: ((pixel[0] / 65_535.0) * 255).to_i,
+                g: ((pixel[1] / 65_535.0) * 255).to_i,
+                b: ((pixel[2] / 65_535.0) * 255).to_i }
         row.push(Node.new(rgb, left: i, top: j, right: i + 1, bottom: j + 1))
       end
       nodes.push(row)
