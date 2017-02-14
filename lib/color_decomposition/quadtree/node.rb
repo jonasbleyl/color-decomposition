@@ -19,6 +19,12 @@ class Node
   end
 
   def rgb_hex
-    "##{rgb[:r].to_s(16)}#{rgb[:g].to_s(16)}#{rgb[:b].to_s(16)}"
+    "##{hex(rgb[:r])}#{hex(rgb[:g])}#{hex(rgb[:b])}"
+  end
+
+  private
+
+  def hex(num)
+    sprintf("%02X", num)
   end
 end
