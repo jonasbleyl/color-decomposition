@@ -12,7 +12,8 @@ class TestColorDecomposition < Test::Unit::TestCase
     quadtree.child_nodes.each do |node|
       draw_node(node, image)
     end
-    image.write 'result-image-tiny.jpg'
+    original = ImageList.new(image_path).export_pixels_to_str
+    assert_equal(original, image.export_pixels_to_str)
   end
 
   def test_small_image_quadtree
@@ -26,7 +27,8 @@ class TestColorDecomposition < Test::Unit::TestCase
         draw_node(inner_node, image)
       end
     end
-    image.write 'result-image-small.jpg'
+    original = ImageList.new(image_path).export_pixels_to_str
+    assert_equal(original, image.export_pixels_to_str)
   end
 
   def test_non_square_image_quadtree
@@ -36,7 +38,8 @@ class TestColorDecomposition < Test::Unit::TestCase
     quadtree.child_nodes.each do |node|
       draw_node(node, image)
     end
-    image.write 'result-image-tiny.jpg'
+    original = ImageList.new(image_path).export_pixels_to_str
+    assert_equal(original, image.export_pixels_to_str)
   end
 
   private
