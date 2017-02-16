@@ -25,19 +25,19 @@ class Quadtree
   def generate_level(diff_amount)
     nodes = []
     nodesRow = []
+    column = 0
     row = 0
-    col = 0
     ((@nodes.size * @nodes[0].size) / 4).times do
-      quad = quad_nodes(row, col)
+      quad = quad_nodes(row, column)
       node = merge(quad, all_leaves?(quad) && similar?(quad, diff_amount))
       nodesRow.push(node)
-      if col + 2 == @nodes[0].size
-        col = 0
+      if column + 2 == @nodes[0].size
+        column = 0
         row += 2
         nodes.push(nodesRow.dup)
         nodesRow.clear
       else
-        col += 2
+        column += 2
       end
     end
     nodes

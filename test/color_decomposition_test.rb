@@ -1,7 +1,6 @@
 require 'color_decomposition'
 require 'rmagick'
 require 'test/unit'
-require 'pp'
 
 class TestColorDecomposition < Test::Unit::TestCase
   include Magick
@@ -28,6 +27,16 @@ class TestColorDecomposition < Test::Unit::TestCase
       end
     end
     image.write 'result-image-small.jpg'
+  end
+
+  def test_non_square_image_quadtree
+    image_path = "#{__dir__}/data/images/image-non-square.png"
+    quadtree = ColorDecomposition.quadtree(image_path, 1)
+    image = Image.new(quadtree.rect[:bottom], quadtree.rect[:right])
+    quadtree.child_nodes.each do |node|
+      draw_node(node, image)
+    end
+    image.write 'result-image-tiny.jpg'
   end
 
   private
