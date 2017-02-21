@@ -7,7 +7,7 @@ module ColorDecomposition
     image = ImageReader.new(path)
     quadtree = Quadtree.new(image.height, image.width)
     image.add_image_data(quadtree)
-    quadtree.generate_optimal_tree(similarity)
+    quadtree.generate_similarity_tree(similarity)
     quadtree.root
   end
 end

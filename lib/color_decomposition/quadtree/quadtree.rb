@@ -12,7 +12,7 @@ class Quadtree
     nodes
   end
 
-  def generate_optimal_tree(similarity)
+  def generate_similarity_tree(similarity)
     level = max_level - 1
     level.times do
       nodes_from_level(nodes = [], level)
