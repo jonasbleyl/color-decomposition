@@ -1,32 +1,31 @@
-require 'color_decomposition/quadtree/node'
 require 'rmagick'
 
 class ImageReader
   include Magick
+  attr_reader :height, :width
 
   def initialize(path)
     @image = ImageList.new(path)
+    @height = @image.rows
+    @width = @image.columns
   end
 
-  def base_image_nodes
-    @nodes ||= create_pixel_nodes
+  def add_image_data(quadtree)
+    quadtree.base_nodes.each do |node|
+      export_pixel_data(node)
+    end
   end
 
   private
 
-  def create_pixel_nodes
-    nodes = []
-    @image.rows.times do |i|
-      scanline = @image.export_pixels(0, i, @image.columns, 1, 'RGB')
-      row = []
-      scanline.each_slice(3).with_index do |pixel, j|
-        rgb = { r: ((pixel[0] / 65_535.0) * 255).to_i,
-                g: ((pixel[1] / 65_535.0) * 255).to_i,
-                b: ((pixel[2] / 65_535.0) * 255).to_i }
-        row.push(Node.new(rgb, left: i, top: j, right: i + 1, bottom: j + 1))
-      end
-      nodes.push(row)
+  def export_pixel_data(node)
+    data = @image.export_pixels(node.rect[:top], node.rect[:left],
+                                node.rect[:right] - node.rect[:left],
+                                node.rect[:bottom] - node.rect[:top], 'RGB')
+    data.each_slice(3) do |pixel|
+      node.rgb = { r: ((pixel[0] / 65_535.0) * 255).to_i,
+                   g: ((pixel[1] / 65_535.0) * 255).to_i,
+                   b: ((pixel[2] / 65_535.0) * 255).to_i }
     end
-    nodes
   end
 end

@@ -5,26 +5,17 @@ require 'test/unit'
 class TestColorDecomposition < Test::Unit::TestCase
   include Magick
 
-  def test_tiny_image_quadtree
-    image_path = "#{__dir__}/data/images/image-tiny.png"
-    quadtree = ColorDecomposition.quadtree(image_path, 1)
-    image = Image.new(quadtree.rect[:bottom], quadtree.rect[:right])
-    quadtree.child_nodes.each do |node|
-      draw_node(node, image)
-    end
-    original = ImageList.new(image_path).export_pixels_to_str
-    assert_equal(original, image.export_pixels_to_str)
-  end
-
   def test_small_image_quadtree
     image_path = "#{__dir__}/data/images/image-small.png"
     quadtree = ColorDecomposition.quadtree(image_path, 1)
     image = Image.new(quadtree.rect[:bottom], quadtree.rect[:right])
     quadtree.child_nodes.each do |node|
-      draw_node(node, image)
-      next if node.child_nodes.nil?
-      node.child_nodes.each do |inner_node|
-        draw_node(inner_node, image)
+      if node.leaf?
+        draw_node(node, image)
+      else
+        node.child_nodes.each do |inner_node|
+          draw_node(inner_node, image) if inner_node.leaf?
+        end
       end
     end
     original = ImageList.new(image_path).export_pixels_to_str
@@ -33,6 +24,17 @@ class TestColorDecomposition < Test::Unit::TestCase
 
   def test_non_square_image_quadtree
     image_path = "#{__dir__}/data/images/image-non-square.png"
+    quadtree = ColorDecomposition.quadtree(image_path, 1)
+    image = Image.new(quadtree.rect[:bottom], quadtree.rect[:right])
+    quadtree.child_nodes.each do |node|
+      draw_node(node, image)
+    end
+    original = ImageList.new(image_path).export_pixels_to_str
+    assert_equal(original, image.export_pixels_to_str)
+  end
+
+  def test_tiny_image_quadtree
+    image_path = "#{__dir__}/data/images/image-tiny.png"
     quadtree = ColorDecomposition.quadtree(image_path, 1)
     image = Image.new(quadtree.rect[:bottom], quadtree.rect[:right])
     quadtree.child_nodes.each do |node|
