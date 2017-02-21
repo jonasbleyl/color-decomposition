@@ -19,13 +19,11 @@ class ImageReader
   private
 
   def export_pixel_data(node)
-    data = @image.export_pixels(node.rect[:top], node.rect[:left],
-                                node.rect[:right] - node.rect[:left],
-                                node.rect[:bottom] - node.rect[:top], 'RGB')
-    data.each_slice(3) do |pixel|
-      node.rgb = { r: ((pixel[0] / 65_535.0) * 255).to_i,
-                   g: ((pixel[1] / 65_535.0) * 255).to_i,
-                   b: ((pixel[2] / 65_535.0) * 255).to_i }
-    end
+    pixels = @image.export_pixels(node.rect[:top], node.rect[:left],
+                                  node.rect[:right] - node.rect[:left],
+                                  node.rect[:bottom] - node.rect[:top], 'RGB')
+    node.rgb = { r: ((pixels[0] / 65_535.0) * 255).to_i,
+                 g: ((pixels[1] / 65_535.0) * 255).to_i,
+                 b: ((pixels[2] / 65_535.0) * 255).to_i }
   end
 end
