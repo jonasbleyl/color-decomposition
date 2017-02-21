@@ -53,7 +53,7 @@ class Quadtree
     level = 0
     num = [@root.rect[:right] - @root.rect[:left],
            @root.rect[:bottom] - @root.rect[:top]].max
-    level += 1 while num / 2**(level + 1) > 1
+    level += 1 while num / 2**(level + 1) >= 1
     level
   end
 end
