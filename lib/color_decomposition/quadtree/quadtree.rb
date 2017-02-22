@@ -15,10 +15,12 @@ class Quadtree
   def generate_similarity_tree(similarity)
     level = max_level - 1
     level.times do
+      puts "Checking quadtree level #{level}"
       nodes_from_level(nodes = [], level)
-      break if nodes.empty?
       nodes.each do |node|
-        node.merge if node.similar?(similarity)
+        if node.child_leaves? && node.similar?(similarity)
+          node.merge
+        end
       end
       level -= 1
     end

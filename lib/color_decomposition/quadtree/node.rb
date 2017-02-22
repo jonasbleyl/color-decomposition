@@ -16,6 +16,10 @@ class Node
     @child_nodes.nil?
   end
 
+  def child_leaves?
+    @child_nodes.all?(&:leaf?)
+  end
+
   def split
     centerX = (rect[:left] + rect[:right]) * 0.5
     centerY = (rect[:top] + rect[:bottom]) * 0.5

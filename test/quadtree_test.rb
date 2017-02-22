@@ -1,7 +1,6 @@
 require 'color_decomposition/quadtree/quadtree'
 require 'color_decomposition/quadtree/node'
 require 'test/unit'
-require 'pp'
 
 class TestColorComparator < Test::Unit::TestCase
   def test_quadtree_rect

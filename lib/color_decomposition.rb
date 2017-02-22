@@ -8,6 +8,7 @@ module ColorDecomposition
     quadtree = Quadtree.new(image.height, image.width)
     image.add_image_data(quadtree)
     quadtree.generate_similarity_tree(similarity)
+    puts 'Similarity quadtree complete'
     quadtree.root
   end
 end
