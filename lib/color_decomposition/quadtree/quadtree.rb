@@ -18,9 +18,7 @@ class Quadtree
       puts "Checking quadtree level #{level}"
       nodes_from_level(nodes = [], level)
       nodes.each do |node|
-        if node.child_leaves? && node.similar?(similarity)
-          node.merge
-        end
+        node.merge if node.child_leaves? && node.similar?(similarity)
       end
       level -= 1
     end
