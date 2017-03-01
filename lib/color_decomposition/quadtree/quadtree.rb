@@ -3,8 +3,8 @@ require 'color_decomposition/quadtree/node'
 class Quadtree
   attr_reader :root
 
-  def initialize(height, width)
-    @root = Node.new(left: 0, top: 0, right: height, bottom: width)
+  def initialize(width, height)
+    @root = Node.new(left: 0, top: 0, right: width, bottom: height)
   end
 
   def base_nodes

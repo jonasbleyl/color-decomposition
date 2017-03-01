@@ -26,9 +26,9 @@ class ImageReader
 
   def export_pixel_data(node)
     @image.export_pixels(
-      node.rect[:top], node.rect[:left],
-      node.rect[:right] - node.rect[:left],
-      node.rect[:bottom] - node.rect[:top], 'RGB'
+      node.rect[:left], node.rect[:top],
+      node.rect[:bottom] - node.rect[:top],
+      node.rect[:right] - node.rect[:left], 'RGB'
     )
   end
 end

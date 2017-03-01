@@ -7,7 +7,7 @@ module ColorDecomposition
       raise ArgumentError, 'Similarity value must be between 0 and 100'
     end
     image = ImageReader.new(path)
-    quadtree = Quadtree.new(image.height, image.width)
+    quadtree = Quadtree.new(image.width, image.height)
     image.add_image_data(quadtree)
     quadtree.generate_similarity_tree(similarity)
     puts 'Similarity quadtree complete'
