@@ -1,4 +1,3 @@
-require 'color_decomposition/version'
 require 'color_decomposition/quadtree/quadtree'
 require 'color_decomposition/image/image_reader'
 
