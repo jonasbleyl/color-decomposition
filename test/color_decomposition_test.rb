@@ -8,7 +8,7 @@ class TestColorDecomposition < Test::Unit::TestCase
   def test_tiny_image_quadtree
     image_path = "#{__dir__}/data/images/test-image-tiny.png"
     quadtree = ColorDecomposition.quadtree(image_path, 1)
-    image = Image.new(quadtree.rect[:bottom], quadtree.rect[:right])
+    image = Image.new(quadtree.rect[:right], quadtree.rect[:bottom])
     quadtree.child_nodes.each do |node|
       draw_node(node, image)
     end
@@ -19,7 +19,7 @@ class TestColorDecomposition < Test::Unit::TestCase
   def test_small_image_quadtree
     image_path = "#{__dir__}/data/images/test-image-small.png"
     quadtree = ColorDecomposition.quadtree(image_path, 1)
-    image = Image.new(quadtree.rect[:bottom], quadtree.rect[:right])
+    image = Image.new(quadtree.rect[:right], quadtree.rect[:bottom])
     quadtree.child_nodes.each do |node|
       if node.leaf?
         draw_node(node, image)
@@ -29,6 +29,7 @@ class TestColorDecomposition < Test::Unit::TestCase
         end
       end
     end
+    image.write 'result.png'
     original = ImageList.new(image_path).export_pixels_to_str
     assert_equal(original, image.export_pixels_to_str)
   end
@@ -36,7 +37,7 @@ class TestColorDecomposition < Test::Unit::TestCase
   def test_non_square_image_quadtree
     image_path = "#{__dir__}/data/images/test-image-non-square.png"
     quadtree = ColorDecomposition.quadtree(image_path, 1)
-    image = Image.new(quadtree.rect[:bottom], quadtree.rect[:right])
+    image = Image.new(quadtree.rect[:right], quadtree.rect[:bottom])
     quadtree.child_nodes.each do |node|
       draw_node(node, image)
     end
@@ -49,8 +50,8 @@ class TestColorDecomposition < Test::Unit::TestCase
   def draw_node(node, image)
     rect = Magick::Draw.new
     rect.fill = node.rgb_hex
-    rect.rectangle(node.rect[:top], node.rect[:left],
-                   node.rect[:bottom], node.rect[:right])
+    rect.rectangle(node.rect[:left], node.rect[:top],
+                   node.rect[:right], node.rect[:bottom])
     rect.draw(image)
   end
 end
