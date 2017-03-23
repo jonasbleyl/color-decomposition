@@ -14,8 +14,10 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test)/})
   end
+  spec.required_ruby_version = '~> 2.4' 
   spec.require_paths = ['lib']
   spec.add_development_dependency 'bundler', '~> 1.13'
+  spec.add_development_dependency 'test-unit', '~> 3.1'
   spec.add_development_dependency 'rake', '~> 12.0'
   spec.add_dependency 'rmagick', '~> 2.16'
 end
