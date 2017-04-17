@@ -1,10 +1,9 @@
-require 'color_decomposition/color/converter'
+require 'color_decomposition/color/color'
 require 'color_decomposition/color/comparator'
 
 module ColorDecomposition
   class Node
     include Comparator
-    include Converter
     attr_accessor :rgb
     attr_reader :rect, :child_nodes
 
@@ -48,7 +47,7 @@ module ColorDecomposition
     end
 
     def lab
-      @lab ||= rgb_to_lab(@rgb)
+      @lab ||= Color.new(@rgb).lab
     end
 
     def rgb_hex

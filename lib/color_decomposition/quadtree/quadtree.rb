@@ -16,7 +16,6 @@ module ColorDecomposition
     def generate_similarity_tree(similarity)
       level = max_level - 1
       level.times do
-        puts "Checking quadtree level #{level}"
         nodes_from_level(nodes = [], level)
         nodes.each do |node|
           node.merge if node.child_leaves? && node.similar?(similarity)

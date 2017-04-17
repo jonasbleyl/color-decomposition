@@ -12,7 +12,6 @@ module ColorDecomposition
     end
 
     def add_image_data(quadtree)
-      puts 'Generating initial quadtree structure'
       quadtree.base_nodes.each do |node|
         pixels = export_pixel_data(node)
         node.rgb = {
