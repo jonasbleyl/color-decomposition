@@ -1,6 +1,8 @@
 module ColorDecomposition
   module Comparator
-    def self.ciede2000(lab1, lab2)
+    module_function
+
+    def ciede2000(lab1, lab2)
       lch1, lch2 = to_lch(lab1, lab2)
 
       l_bar = (lch1[:l] + lch2[:l]) / 2
@@ -29,7 +31,7 @@ module ColorDecomposition
 
     private
 
-    def self.to_lch(lab1, lab2)
+    def to_lch(lab1, lab2)
       c1_star = Math.sqrt(lab1[:a]**2 + lab1[:b]**2)
       c2_star = Math.sqrt(lab2[:a]**2 + lab2[:b]**2)
       c_bar_star = (c1_star + c2_star) / 2
@@ -39,18 +41,18 @@ module ColorDecomposition
        { l: lab2[:l] }.merge(modified_hue(lab2, g))]
     end
 
-    def self.modified_hue(lab, g)
+    def modified_hue(lab, g)
       a = (1 + g) * lab[:a]
       c = Math.sqrt(a**2 + lab[:b]**2)
 
       h = lab[:b] != 0 || a != 0 ? degrees(Math.atan2(lab[:b], a)) : 0
-      h += 360 if h < 0
+      h += 360 if h.negative?
       { c: c, h: h }
     end
 
-    def self.hue_angle(lch1, lch2)
+    def hue_angle(lch1, lch2)
       h_diff = lch2[:h] - lch1[:h]
-      h = if lch1[:c] * lch2[:c] == 0
+      h = if (lch1[:c] * lch2[:c]).zero?
             0
           elsif h_diff.abs <= 180
             h_diff
@@ -62,9 +64,9 @@ module ColorDecomposition
       2 * Math.sqrt(lch1[:c] * lch2[:c]) * Math.sin(radians(h) / 2)
     end
 
-    def self.mean_hue(lch1, lch2)
+    def mean_hue(lch1, lch2)
       h_sum = lch1[:h] + lch2[:h]
-      if (lch1[:c] * lch2[:c]) == 0
+      if (lch1[:c] * lch2[:c]).zero?
         h_sum
       elsif (lch1[:h] - lch2[:h]).abs <= 180
         h_sum / 2
@@ -75,11 +77,11 @@ module ColorDecomposition
       end
     end
 
-    def self.radians(num)
+    def radians(num)
       num * Math::PI / 180
     end
 
-    def self.degrees(num)
+    def degrees(num)
       num * 180 / Math::PI
     end
   end

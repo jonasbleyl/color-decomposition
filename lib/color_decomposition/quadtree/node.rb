@@ -3,6 +3,8 @@ require 'color_decomposition/color/comparator'
 
 module ColorDecomposition
   class Node
+    include Comparator
+    include Converter
     attr_accessor :rgb
     attr_reader :rect, :child_nodes
 
@@ -22,13 +24,13 @@ module ColorDecomposition
     end
 
     def split
-      centerX = (rect[:left] + rect[:right]) * 0.5
-      centerY = (rect[:top] + rect[:bottom]) * 0.5
+      center_x = (rect[:left] + rect[:right]) * 0.5
+      center_y = (rect[:top] + rect[:bottom]) * 0.5
       @child_nodes = [
-        new_child_node(rect[:left], rect[:top], centerX, centerY),
-        new_child_node(centerX, rect[:top], rect[:right], centerY),
-        new_child_node(rect[:left], centerY, centerX, rect[:bottom]),
-        new_child_node(centerX, centerY, rect[:right], rect[:bottom])
+        new_child_node(rect[:left], rect[:top], center_x, center_y),
+        new_child_node(center_x, rect[:top], rect[:right], center_y),
+        new_child_node(rect[:left], center_y, center_x, rect[:bottom]),
+        new_child_node(center_x, center_y, rect[:right], rect[:bottom])
       ]
     end
 
@@ -39,14 +41,14 @@ module ColorDecomposition
     end
 
     def similar?(amount)
-      v1 = Comparator.ciede2000(@child_nodes[0].lab, @child_nodes[1].lab)
-      v2 = Comparator.ciede2000(@child_nodes[2].lab, @child_nodes[3].lab)
-      v3 = Comparator.ciede2000(@child_nodes[0].lab, @child_nodes[2].lab)
+      v1 = ciede2000(@child_nodes[0].lab, @child_nodes[1].lab)
+      v2 = ciede2000(@child_nodes[2].lab, @child_nodes[3].lab)
+      v3 = ciede2000(@child_nodes[0].lab, @child_nodes[2].lab)
       v1 < amount && v2 < amount && v3 < amount
     end
 
     def lab
-      @lab ||= Converter.rgb_to_lab(@rgb)
+      @lab ||= rgb_to_lab(@rgb)
     end
 
     def rgb_hex
@@ -61,7 +63,7 @@ module ColorDecomposition
     end
 
     def hex(num)
-      sprintf('%02X', num)
+      format('%02X', num)
     end
   end
 end

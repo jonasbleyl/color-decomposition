@@ -3,7 +3,9 @@ require 'color_decomposition/image/image_reader'
 require 'color_decomposition/version'
 
 module ColorDecomposition
-  def self.quadtree(path, similarity)
+  module_function
+
+  def quadtree(path, similarity)
     unless similarity.between?(0, 100)
       raise ArgumentError, 'Similarity value must be between 0 and 100'
     end

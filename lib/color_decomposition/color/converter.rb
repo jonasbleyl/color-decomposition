@@ -2,12 +2,14 @@ require 'matrix'
 
 module ColorDecomposition
   module Converter
-    def self.rgb_to_xyz(rgb)
+    module_function
+
+    def rgb_to_xyz(rgb)
       r = xyz_channel(rgb[:r] / 255.0)
       g = xyz_channel(rgb[:g] / 255.0)
       b = xyz_channel(rgb[:b] / 255.0)
 
-      # sRGB D65 illuminant and 2° observer values
+      # sRGB D65 illuminant and 2 degrees observer values
       s = Matrix[[0.4124, 0.3576, 0.1805],
                  [0.2126, 0.7152, 0.0722],
                  [0.0193, 0.1192, 0.9505]]
@@ -16,7 +18,7 @@ module ColorDecomposition
       { x: xyz[0, 0], y: xyz[1, 0], z: xyz[2, 0] }
     end
 
-    def self.xyz_to_lab(xyz)
+    def xyz_to_lab(xyz)
       # CIEXYZ white point values (D65)
       x = lab_channel(xyz[:x] / 95.047)
       y = lab_channel(xyz[:y] / 100.000)
@@ -28,14 +30,14 @@ module ColorDecomposition
       { l: l.clamp(0, 100), a: a, b: b }
     end
 
-    def self.rgb_to_lab(rgb)
+    def rgb_to_lab(rgb)
       xyz = rgb_to_xyz(rgb)
       xyz_to_lab(xyz)
     end
 
     private
 
-    def self.xyz_channel(color)
+    def xyz_channel(color)
       if color > 0.04045
         ((color + 0.055) / 1.055)**2.4
       else
@@ -43,7 +45,7 @@ module ColorDecomposition
       end
     end
 
-    def self.lab_channel(color)
+    def lab_channel(color)
       if color > 0.008856
         color**(1.0 / 3)
       else

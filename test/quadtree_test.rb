@@ -3,8 +3,10 @@ require 'color_decomposition/quadtree/node'
 require 'test/unit'
 
 class TestColorComparator < Test::Unit::TestCase
+  include ColorDecomposition
+
   def test_quadtree_rect
-    quadtree = ColorDecomposition::Quadtree.new(2, 2)
+    quadtree = Quadtree.new(2, 2)
     assert_equal({ left: 0, top: 0, right: 2, bottom: 2 }, quadtree.root.rect)
 
     nodes = quadtree.base_nodes
@@ -15,13 +17,13 @@ class TestColorComparator < Test::Unit::TestCase
   end
 
   def test_quadtree_base_nodes
-    quadtree = ColorDecomposition::Quadtree.new(6, 6)
+    quadtree = Quadtree.new(6, 6)
     assert_equal(16, quadtree.base_nodes.size)
 
-    quadtree = ColorDecomposition::Quadtree.new(15, 15)
+    quadtree = Quadtree.new(15, 15)
     assert_equal(64, quadtree.base_nodes.size)
 
-    quadtree = ColorDecomposition::Quadtree.new(250, 150)
+    quadtree = Quadtree.new(250, 150)
     assert_equal(16_384, quadtree.base_nodes.size)
   end
 end
