@@ -11,11 +11,11 @@ levels containing a visually similar color for a given area.
 ## Installation
 
 This gem requires an installation of
-[ImageMagick](https://legacy.imagemagick.org/script/download.php) `version 6`. Ensure
-that this is installed and download the gem's other dependencies:
+[ImageMagick](https://legacy.imagemagick.org/script/download.php) `version 6`. Once this
+is done you can install the gem:
 
 ``` bash
-bundle install
+gem install color-decomposition
 ```
 
 ## Usage
@@ -30,6 +30,8 @@ When comparing 2 colors, a CIEDE2000 value of `<= 1` will generally mean that th
 difference between them will not be perceivable to the human eye.
 
 ``` ruby
+require 'color-decomposition'
+
 quadtree = ColorDecomposition.quadtree('ruby.png', 1)
 ```
 
@@ -67,6 +69,8 @@ nodes will have the RGB and CIELAB color values set.
 The color conversions and CIEDE2000 calculation can also be used on their own.
 
 ``` ruby
+require 'color-decomposition'
+
 include ColorDecomposition
 
 color1 = Color.new({r: 255, g: 120, b: 60})
