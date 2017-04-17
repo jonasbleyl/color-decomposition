@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'color_decomposition/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'color-decomposition'
+  spec.name          = 'color_decomposition'
   spec.version       = ColorDecomposition::VERSION
   spec.authors       = ['Jonas Bleyl']
   spec.summary       = 'Quadtree decomposition of images by color.'
