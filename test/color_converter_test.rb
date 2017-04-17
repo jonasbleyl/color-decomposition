@@ -1,10 +1,8 @@
-require 'color_decomposition/color/converter'
+require 'color_decomposition/color/color'
 require 'test/unit'
 require 'csv'
 
 class TestColorConverter < Test::Unit::TestCase
-  include ColorDecomposition::Converter
-
   def setup
     @conversion_data = []
     CSV.foreach('test/data/csv/test-data-conversion.csv', headers: true) do |row|
@@ -17,15 +15,15 @@ class TestColorConverter < Test::Unit::TestCase
 
   def test_rgb_to_xyz
     @conversion_data.each do |data|
-      xyz = rgb_to_xyz(data[:rgb])
+      xyz = ColorDecomposition::Color.new(data[:rgb]).xyz
       xyz.update(xyz) { |_k, v| v.round(3) }
       assert_equal(data[:xyz], xyz)
     end
   end
 
-  def test_xyz_to_lab
+  def test_rgb_to_lab
     @conversion_data.each do |data|
-      lab = xyz_to_lab(data[:xyz])
+      lab = ColorDecomposition::Color.new(data[:rgb]).lab
       lab.update(lab) { |_k, v| v.round(3) }
       assert_equal(data[:lab], lab)
     end
