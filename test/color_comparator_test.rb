@@ -1,4 +1,4 @@
-require 'color_decomposition/color/color_comparator'
+require 'color_decomposition/color/comparator'
 require 'test/unit'
 require 'csv'
 
@@ -14,7 +14,7 @@ class TestColorComparator < Test::Unit::TestCase
 
   def test_ciede2000
     @sample_data.each do |data|
-      value = ColorComparator.ciede2000(data[:lab1], data[:lab2])
+      value = ColorDecomposition::Comparator.ciede2000(data[:lab1], data[:lab2])
       assert_equal(data[:ciede2000], value.round(4))
     end
   end

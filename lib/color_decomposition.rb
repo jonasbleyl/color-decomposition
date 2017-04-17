@@ -1,5 +1,6 @@
 require 'color_decomposition/quadtree/quadtree'
 require 'color_decomposition/image/image_reader'
+require 'color_decomposition/version'
 
 module ColorDecomposition
   def self.quadtree(path, similarity)

@@ -1,4 +1,4 @@
-require 'color_decomposition/color/color_converter'
+require 'color_decomposition/color/converter'
 require 'test/unit'
 require 'csv'
 
@@ -15,7 +15,7 @@ class TestColorConverter < Test::Unit::TestCase
 
   def test_rgb_to_xyz
     @conversion_data.each do |data|
-      xyz = ColorConverter.rgb_to_xyz(data[:rgb])
+      xyz = ColorDecomposition::Converter.rgb_to_xyz(data[:rgb])
       xyz.update(xyz) { |_k, v| v.round(3) }
       assert_equal(data[:xyz], xyz)
     end
@@ -23,7 +23,7 @@ class TestColorConverter < Test::Unit::TestCase
 
   def test_xyz_to_lab
     @conversion_data.each do |data|
-      lab = ColorConverter.xyz_to_lab(data[:xyz])
+      lab = ColorDecomposition::Converter.xyz_to_lab(data[:xyz])
       lab.update(lab) { |_k, v| v.round(3) }
       assert_equal(data[:lab], lab)
     end
