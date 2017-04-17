@@ -73,11 +73,11 @@ require 'color_decomposition'
 
 include ColorDecomposition
 
-color1 = Color.new({r: 255, g: 120, b: 60})
+color1 = Color.new(r: 255, g: 120, b: 60)
 puts color1.xyz # {:x=>48.77208180663368, :y=>35.01918603060906, :z=>8.46377233268254}
 puts color1.lab # {:l=>65.76360001472788, :a=>47.86642591164642, :b=>55.61626679147632}
 
-color2 = Color.new({r: 80, g: 49, b: 220})
+color2 = Color.new(r: 80, g: 49, b: 220)
 puts Comparator.ciede2000(color1.lab, color2.lab) # 57.24131929494836
 ```
 
