@@ -1,6 +1,6 @@
 module ColorDecomposition
   module Comparator
-    module_function
+    extend self
 
     def ciede2000(lab1, lab2)
       lch1, lch2 = to_lch(lab1, lab2)
