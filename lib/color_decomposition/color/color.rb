@@ -9,36 +9,36 @@ module ColorDecomposition
     end
 
     def xyz
-      r = xyz_channel(@rgb[:r] / 255.0)
-      g = xyz_channel(@rgb[:g] / 255.0)
-      b = xyz_channel(@rgb[:b] / 255.0)
+      @xyz ||= begin
+        r = xyz_channel(@rgb[:r] / 255.0)
+        g = xyz_channel(@rgb[:g] / 255.0)
+        b = xyz_channel(@rgb[:b] / 255.0)
 
-      # sRGB D65 illuminant and 2 degrees observer values
-      s = Matrix[[0.4124, 0.3576, 0.1805],
-                 [0.2126, 0.7152, 0.0722],
-                 [0.0193, 0.1192, 0.9505]]
+        # sRGB D65 illuminant and 2 degrees observer values
+        s = Matrix[[0.4124, 0.3576, 0.1805],
+                   [0.2126, 0.7152, 0.0722],
+                   [0.0193, 0.1192, 0.9505]]
 
-      xyz = s * Matrix[[r], [g], [b]] * 100
-      { x: xyz[0, 0], y: xyz[1, 0], z: xyz[2, 0] }
+        xyz = s * Matrix[[r], [g], [b]] * 100
+        { x: xyz[0, 0], y: xyz[1, 0], z: xyz[2, 0] }
+      end
     end
 
     def lab
-      xyz_to_lab(xyz)
+      @lab ||= begin
+        # CIEXYZ white point values (D65)
+        x = lab_channel(xyz[:x] / 95.047)
+        y = lab_channel(xyz[:y] / 100.000)
+        z = lab_channel(xyz[:z] / 108.883)
+
+        l = 116 * y - 16
+        a = 500 * (x - y)
+        b = 200 * (y - z)
+        { l: l.clamp(0, 100), a: a, b: b }
+      end
     end
 
     private
-
-    def xyz_to_lab(xyz)
-      # CIEXYZ white point values (D65)
-      x = lab_channel(xyz[:x] / 95.047)
-      y = lab_channel(xyz[:y] / 100.000)
-      z = lab_channel(xyz[:z] / 108.883)
-
-      l = 116 * y - 16
-      a = 500 * (x - y)
-      b = 200 * (y - z)
-      { l: l.clamp(0, 100), a: a, b: b }
-    end
 
     def xyz_channel(color)
       if color > 0.04045
