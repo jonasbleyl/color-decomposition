@@ -1,12 +1,14 @@
 # Color decomposition
 
-<img align="left" hspace="20" vspace="6" src="http://i.imgur.com/7L6XkjE.gif" width="120">
+<img align="left" hspace="6" src="http://i.imgur.com/7L6XkjE.gif" width="120">
 
 A quadtree color decomposition algorithm that uses the CIELAB color space and the
 CIEDE2000 color difference formula.
 
 The generated quadtree structure contains the leaves that represent the highest node
 levels containing a visually similar color for a given area.
+
+<br>
 
 ## Installation
 
