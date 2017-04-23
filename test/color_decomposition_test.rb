@@ -29,7 +29,6 @@ class TestColorDecomposition < Test::Unit::TestCase
         end
       end
     end
-    image.write 'result.png'
     original = ImageList.new(image_path).export_pixels_to_str
     assert_equal(original, image.export_pixels_to_str)
   end
