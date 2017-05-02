@@ -1,5 +1,5 @@
 require 'color_decomposition/quadtree/quadtree'
-require 'color_decomposition/image/image_reader'
+require 'color_decomposition/image'
 require 'color_decomposition/version'
 
 module ColorDecomposition
@@ -9,7 +9,7 @@ module ColorDecomposition
     unless similarity.between?(0, 100)
       raise ArgumentError, 'Similarity value must be between 0 and 100'
     end
-    image = ImageReader.new(path)
+    image = Image.new(path)
     puts 'Generating initial quadtree structure'
     quadtree = Quadtree.new(image.width, image.height)
     image.add_image_data(quadtree)

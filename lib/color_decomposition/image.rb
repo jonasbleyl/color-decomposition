@@ -1,7 +1,7 @@
 require 'rmagick'
 
 module ColorDecomposition
-  class ImageReader
+  class Image
     include Magick
     attr_reader :height, :width
 
