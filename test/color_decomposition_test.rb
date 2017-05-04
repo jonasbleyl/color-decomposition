@@ -5,6 +5,16 @@ require 'test/unit'
 class TestColorDecomposition < Test::Unit::TestCase
   include Magick
 
+  def test_invalid_arguments
+    image_path = "#{__dir__}/data/images/test-image-tiny.png"
+    assert_raise ArgumentError do
+      ColorDecomposition.quadtree(image_path, -1)
+    end
+    assert_raise ArgumentError do
+      ColorDecomposition.quadtree(image_path, 101)
+    end
+  end
+
   def test_tiny_image_quadtree
     image_path = "#{__dir__}/data/images/test-image-tiny.png"
     quadtree = ColorDecomposition.quadtree(image_path, 1)
