@@ -3,30 +3,45 @@
 <img align="left" hspace="6" src="http://i.imgur.com/7L6XkjE.gif" width="120">
 
 A quadtree color decomposition algorithm that uses the CIELAB color space and the
-CIEDE2000 color difference formula.
+CIEDE2000 color-difference formula.
 
 The generated quadtree structure contains the leaves that represent the highest node
-levels containing a visually similar color for a given area.
+levels containing a perceptually similar color for a given area.
 
 <br>
 
-## Installation
+## Prerequisite
 
 This gem requires an installation of
-[ImageMagick](https://legacy.imagemagick.org/script/download.php) `version 6`. Once this
-is done you can install the gem:
+[ImageMagick](https://legacy.imagemagick.org/script/download.php) `version 6`.
 
-``` bash
-gem install color_decomposition
+## Installation
+
+Installing can be done by adding the following line to an application's Gemfile:
+
 ```
+gem 'color_decomposition'
+``` 
+
+and then executing:
+
+```
+bundle
+``` 
+
+Or just install it yourself using:
+
+```
+gem install color_decomposition
+``` 
 
 ## Usage
 
 Generating the actual quadtree simply requires calling the `quadtree` method. This
 method takes 2 parameters. The first being the path to the image and the second being
-the color similarity level that the CIEDE2000 formula should use. The higher this value,
-the more color loss will be allowed. This will allow the creation of larger leaf nodes
-at the cost of color accuracy.
+the color similarity level that the CIEDE2000 formula should use. The larger this value,
+the more color loss will be permitted. A larger value will therefore allow the creation 
+of larger leaf nodes at the cost of color accuracy.
 
 When comparing 2 colors, a CIEDE2000 value of `<= 1` will generally mean that the
 difference between them will not be perceivable to the human eye.
@@ -37,36 +52,8 @@ require 'color_decomposition'
 quadtree = ColorDecomposition.quadtree('ruby.png', 1)
 ```
 
-This will return a quadtree object with a nested structure as shown below. Only leaf
+This will return a [Node](https://github.com/jonasbleyl/color-decomposition/blob/master/lib/color_decomposition/quadtree/node.rb) object containing the following accessible instance variables: `rgb`, `lab`, `rect` and `child_nodes`. However, only the leaf
 nodes will have the RGB and CIELAB color values set.
-
-``` ruby
-#<ColorDecomposition::Node:0x007fb707196f98
- @child_nodes=
-  [#<ColorDecomposition::Node:0x007fb707196ef8
-    @child_nodes=nil,
-    @lab={:l=>0.0, :a=>0.0, :b=>0.0},
-    @rect={:left=>0, :top=>0, :right=>32, :bottom=>32},
-    @rgb={:r=>0, :g=>0, :b=>0}>,
-   #<ColorDecomposition::Node:0x007fb707196e80
-    @child_nodes=nil,
-    @lab={:l=>100.0, :a=>0.00526049995830391, :b=>-0.010408184525267927},
-    @rect={:left=>32, :top=>0, :right=>64, :bottom=>32},
-    @rgb={:r=>255, :g=>255, :b=>255}>,
-   #<ColorDecomposition::Node:0x007fb707196e30
-    @child_nodes=nil,
-    @lab={:l=>100.0, :a=>0.00526049995830391, :b=>-0.010408184525267927},
-    @rect={:left=>0, :top=>32, :right=>32, :bottom=>64},
-    @rgb={:r=>255, :g=>255, :b=>255}>,
-   #<ColorDecomposition::Node:0x007fb707196de0
-    @child_nodes=nil,
-    @lab={:l=>100.0, :a=>0.00526049995830391, :b=>-0.010408184525267927},
-    @rect={:left=>32, :top=>32, :right=>64, :bottom=>64},
-    @rgb={:r=>255, :g=>255, :b=>255}>],
- @lab=nil,
- @rect={:left=>0, :top=>0, :right=>64, :bottom=>64},
- @rgb=nil>
-```
 
 The color conversions and CIEDE2000 calculation can also be used on their own.
 
