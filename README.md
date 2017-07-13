@@ -19,20 +19,20 @@ This gem requires an installation of
 
 Installing can be done by adding the following line to an application's Gemfile:
 
-```
+``` ruby
 gem 'color_decomposition'
 ``` 
 
 and then executing:
 
-```
-bundle
+``` bash
+$ bundle
 ``` 
 
 Or just install it yourself using:
 
-```
-gem install color_decomposition
+``` bash
+$ gem install color_decomposition
 ``` 
 
 ## Usage
